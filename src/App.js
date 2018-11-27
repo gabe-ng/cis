@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Investment from './Investment';
 
 class App extends Component {
   state = {
@@ -15,9 +16,19 @@ class App extends Component {
   
   render() {
     console.log(this.state);
+
+    let investments = this.state.investments.map(investment => <Investment investment={investment} />)
+
     return (
       <div>
-        hello 
+        <tr>
+          <th><h1>Investment</h1></th>
+          <th><h1>Asset</h1></th>
+          <th><h1>Investment Date</h1></th>
+          <th><h1>Shares</h1></th>
+          <th><h1>Cost</h1></th>
+        </tr>
+        {investments}
       </div>
     );
   }
