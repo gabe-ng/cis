@@ -27,19 +27,19 @@ class Investment extends Component {
 
   render() {
 
-    let shares = this.props.investment.issued_assets.reduce((acc, x) => acc + x.quantity, 0);
-    let cost = this.props.investment.issued_assets.reduce((acc, x) => acc + x.cost.$, 0);
+    let shares = this.props.investment.issued_assets.reduce((acc, asset) => acc + asset.quantity, 0).toLocaleString();
+    let cost = this.props.investment.issued_assets.reduce((acc, asset) => acc + asset.cost.$, 0).toLocaleString();
     let assets = this.props.investment.issued_assets.map(asset => <Asset asset={asset} key={asset.id}/>)
 
     let arrow;
     this.state.assetsShown === true ?
-        arrow = <i class="fas fa-caret-down"></i> :
-        arrow = <i class="fas fa-caret-right"></i>
+        arrow = <i className="fas fa-caret-down arrow"></i> :
+        arrow = <i className="fas fa-caret-right arrow"></i>
 
     return (
         <React.Fragment>
             <tr className="investment">
-                <td>{this.props.investment.name} <span onClick={this.toggleAssets}>{arrow}</span></td>
+                <td><span className="expand" onClick={this.toggleAssets}>{this.props.investment.name}{arrow}</span></td>
                 <td></td>
                 <td></td>
                 <td>$ {shares}</td>
