@@ -17,19 +17,21 @@ class App extends Component {
   render() {
     console.log(this.state);
 
-    let investments = this.state.investments.map(investment => <Investment investment={investment} />)
+    let investments = this.state.investments.map(investment => <Investment investment={investment} key={investment.id}/>)
 
     return (
-      <div>
-        <tr>
-          <th><h1>Investment</h1></th>
-          <th><h1>Asset</h1></th>
-          <th><h1>Investment Date</h1></th>
-          <th><h1>Shares</h1></th>
-          <th><h1>Cost</h1></th>
-        </tr>
-        {investments}
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <th><h1>Investment</h1></th>
+            <th><h1>Asset</h1></th>
+            <th><h1>Investment Date</h1></th>
+            <th><h1>Shares</h1></th>
+            <th><h1>Cost</h1></th>
+          </tr>
+          {investments}
+        </tbody>
+      </table>
     );
   }
 }

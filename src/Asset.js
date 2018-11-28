@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 
 class Asset extends Component {
   static propTypes = {
-    prop: PropTypes
+    asset: PropTypes.object.isRequired,
+  }
+
+  state = {
+      isShowing: true,
   }
 
   render() {
     return (
-      <div>
-        
-      </div>
+        <tr>
+            <td></td>
+            <td>{this.props.asset.asset_class}</td>
+            <td>{this.props.asset.investment_date}</td>
+            <td>$ {this.props.asset.quantity}</td>
+            <td>$ {this.props.asset.cost.$}</td>
+        </tr>
     )
   }
 }

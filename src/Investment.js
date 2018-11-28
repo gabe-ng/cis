@@ -15,7 +15,7 @@ class Investment extends Component {
     let shares = this.props.investment.issued_assets.reduce((acc, x) => acc + x.quantity, 0);
     let cost = this.props.investment.issued_assets.reduce((acc, x) => acc + x.cost.$, 0);
 
-    let assets = this.props.investment.issued_assets.map(asset => <Asset asset={asset} />)
+    let assets = this.props.investment.issued_assets.map(asset => <Asset asset={asset} key={asset.id}/>)
 
     return (
         <React.Fragment>
@@ -26,7 +26,8 @@ class Investment extends Component {
                 <td>$ {shares}</td>
                 <td>$ {cost}</td>
             </tr>
-            
+            {assets}
+
         </React.Fragment>
     )
   }
