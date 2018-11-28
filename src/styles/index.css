@@ -13,6 +13,7 @@ body {
 
 .title {
     color: #038bca;
+    font-size: 2.5em;
 }
 
 .expand {
@@ -24,9 +25,25 @@ body {
 }
 
 .date-picker {
+    font-size: .8em;
     background: #1f2739;
     color: #fb667a;
     border: 1px solid #fb667a;
+    margin: 0 .5em;
+}
+
+button {
+    font-size: .8em;
+    color: #fb667a;
+    background: transparent;
+    border: 1px solid #fb667a;
+    margin: 0 .5em;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #1F2739;
+    background: #fb667a;
 }
 
 /* Table Styles */

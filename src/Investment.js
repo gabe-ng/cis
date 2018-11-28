@@ -8,13 +8,13 @@ class Investment extends Component {
   }
 
   state = {
-      assetsShown: this.props.showingAll,
+      assetsShown: this.props.showing,
   }
 
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
         this.setState({
-            assetsShown: this.props.showingAll,
+            assetsShown: this.props.showing,
         })
     }
   }

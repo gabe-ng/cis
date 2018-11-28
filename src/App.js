@@ -7,11 +7,16 @@ import "react-datepicker/dist/react-datepicker.css";
 class App extends Component {
   state = {
     investments: [],
-    showingAll: true,
+    showingAssets: true,
     date: new Date(),
   };
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    this.getInvestments();
+  }
+
+  // Handles API call for investments
+  getInvestments = async () => {
     // Convert current picked date to proper format
     let date = this.convertDate(this.state.date)
 
@@ -42,14 +47,14 @@ class App extends Component {
   // Collapse all investment assets
   collapseAll = () => {
     this.setState({
-      showingAll: false,
+      showingAssets: false,
     })
   }
 
   // Expand all investment assets
   expandAll = () => {
     this.setState({
-      showingAll: true,
+      showingAssets: true,
     })
   }
 
@@ -63,10 +68,13 @@ class App extends Component {
   render() {
 
     let investments =
-      this.state.investments.map(investment => <Investment investment={investment} key={investment.id} showingAll={this.state.showingAll} />)
+      this.state.investments.map(investment => <Investment investment={investment} key={investment.id} showing={this.state.showingAssets} />)
 
     let totalCost = 
       this.state.investments.reduce((acc, investment) => acc + investment.cost.$, 0).toLocaleString();
+
+    let totalShares =
+      this.state.investments.reduce((acc, investment) => acc + investment.quantity, 0).toLocaleString();
 
     return (
       <div className="app">
@@ -74,7 +82,8 @@ class App extends Component {
         <div className="options">
         <button onClick={this.collapseAll}>Collapse All</button>
         <button onClick={this.expandAll}>Expand All</button>
-          <DatePicker selected={this.state.date} onChange={this.setDate} todayButton={"Today"} className="date-picker"/>
+        <DatePicker selected={this.state.date} onChange={this.setDate} todayButton={"Today"} className="date-picker"/>
+        <button onClick={this.getInvestments}>Search</button>
       </div>
         <table className="container">
           <tbody>
@@ -90,7 +99,7 @@ class App extends Component {
               <td>Total</td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>$ {totalShares}</td>
               <td>$ {totalCost}</td>
             </tr>
           </tbody>
