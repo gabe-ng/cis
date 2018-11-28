@@ -6,13 +6,9 @@ class Asset extends Component {
     asset: PropTypes.object.isRequired,
   }
 
-  state = {
-      isShowing: true,
-  }
-
   render() {
     return (
-        <tr>
+        <tr className="asset">
             <td></td>
             <td>{this.props.asset.asset_class}</td>
             <td>{this.props.asset.investment_date}</td>
