@@ -69,7 +69,7 @@ class App extends Component {
 
     let investments =
       this.state.investments.map(investment => 
-        <Investment investmentInfo={investment} key={investment.id} showing={this.state.showingAssets} />)
+        <Investment investmentInfo={investment} key={investment.id} showing={this.state.showingAssets} selectedDate={this.state.formattedDate} />)
 
     let totalCost = 
       this.state.investments.reduce((acc, investment) => acc + investment.cost.$, 0).toLocaleString();

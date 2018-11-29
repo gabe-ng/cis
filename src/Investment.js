@@ -25,13 +25,19 @@ class Investment extends Component {
       })
   }
 
+  convertDateToMS = date => {
+    return new Date(String(date)).getTime();
+  }
+
   render() {
 
     let shares = this.props.investmentInfo.issued_assets.reduce((acc, asset) => acc + asset.quantity, 0).toLocaleString();
     let cost = this.props.investmentInfo.issued_assets.reduce((acc, asset) => acc + asset.cost.$, 0).toLocaleString();
     
-    let assets = 
-        this.props.investmentInfo.issued_assets.map(asset => <Asset assetInfo={asset} key={asset.id}/>)
+      let assets =
+          this.props.investmentInfo.issued_assets
+            .filter(asset => { return this.convertDateToMS(asset.investment_date) < this.convertDateToMS(this.props.selectedDate); })
+            .map(asset => <Asset assetInfo={asset} key={asset.id} />)
 
     let arrow;
         this.state.assetsShown === true ?
