@@ -9,6 +9,7 @@ class App extends Component {
     investments: [],
     showingAssets: true,
     date: new Date(),
+    formattedDate: null,
   };
 
   componentDidMount = () => {
@@ -17,16 +18,14 @@ class App extends Component {
 
   // Handles API call for investments
   getInvestments = async () => {
-    // Convert current picked date to proper format
-    let date = this.convertDate(this.state.date)
+    let formattedDate = this.state.formattedDate ? this.state.formattedDate : this.convertDate(this.state.date);
 
-    // Ajax call
-    let response = await fetch("https://gist.githubusercontent.com/cranium/d8b83184bf0750f2c834760b7c9203dc/raw/a73a70716951f77b90e84b8848ff1fee46938dd1/soi.json?date=" + date);
+    let response = await fetch("https://gist.githubusercontent.com/cranium/d8b83184bf0750f2c834760b7c9203dc/raw/a73a70716951f77b90e84b8848ff1fee46938dd1/soi.json?date=" + formattedDate);
     let investments = await response.json();
 
-    // Set response in state
     this.setState({
       investments,
+      formattedDate,
     })
   }
 
@@ -61,14 +60,16 @@ class App extends Component {
   // Set date to user input
   setDate = date => {
     this.setState({
-      date: date
+      date: date,
+      formattedDate: this.convertDate(date)
     });
   }
   
   render() {
 
     let investments =
-      this.state.investments.map(investment => <Investment investment={investment} key={investment.id} showing={this.state.showingAssets} />)
+      this.state.investments.map(investment => 
+        <Investment investmentInfo={investment} key={investment.id} showing={this.state.showingAssets} />)
 
     let totalCost = 
       this.state.investments.reduce((acc, investment) => acc + investment.cost.$, 0).toLocaleString();
