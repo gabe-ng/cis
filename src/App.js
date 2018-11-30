@@ -49,7 +49,8 @@ class App extends Component {
   };
   
   filterAssets = assets => assets
-    .filter(asset => this.convertDateToMS(asset.investment_date) < this.convertDateToMS(this.state.formattedDate));
+    .filter(asset => {
+      return this.convertDateToMS(asset.investment_date) <= this.convertDateToMS(this.state.formattedDate)});
 
   // Collapse all investment assets
   collapseAll = () => {
@@ -74,7 +75,23 @@ class App extends Component {
   };
 
   convertDateToMS = date => {
-    return new Date(String(date)).getTime();
+    let dateToString = String(date);
+
+    if (dateToString[2] === "/") { 
+      // Split and reverse order from MM-DD-YYYY to YYYY-DD-MM
+      let reversedDate = dateToString.split("/").reverse();
+      // Swap the second and third element so order is YYYY-MM-DD
+      let temp = reversedDate[1];
+      reversedDate[1] = reversedDate[2];
+      reversedDate[2] = temp;
+
+      let newDate = reversedDate.join("-");
+
+      return new Date(newDate).getTime();
+    } else {
+      return new Date(dateToString).getTime();
+    }
+
   };
 
   render() {
