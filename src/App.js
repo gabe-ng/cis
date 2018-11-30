@@ -47,6 +47,9 @@ class App extends Component {
 
     return yyyymmdd;
   };
+  
+  filterAssets = assets => assets
+    .filter(asset => this.convertDateToMS(asset.investment_date) < this.convertDateToMS(this.state.formattedDate));
 
   // Collapse all investment assets
   collapseAll = () => {
@@ -82,23 +85,20 @@ class App extends Component {
         showing={this.state.showingAssets}
         selectedDate={this.state.formattedDate}
         convertDateToMS={this.convertDateToMS}
+        filterAssets={this.filterAssets}
       />
     ));
     
     // Find total cost by filtering assets by date then summing up remaining assets' cost
     let totalCost = this.state.investments
       .reduce((acc, investment) => {
-        let assetCost = investment.issued_assets
-          .filter(asset => this.convertDateToMS(asset.investment_date) < this.convertDateToMS(this.state.formattedDate))
-          .reduce((acc, asset) => acc + asset.cost.$, 0);
+        let assetCost = this.filterAssets(investment.issued_assets).reduce((acc, asset) => acc + asset.cost.$, 0);
         return acc + assetCost}, 0)
       .toLocaleString();
 
     let totalShares = this.state.investments
       .reduce((acc, investment) => {
-        let assetShares = investment.issued_assets
-          .filter(asset => this.convertDateToMS(asset.investment_date) < this.convertDateToMS(this.state.formattedDate))
-          .reduce((acc, asset) => acc + asset.quantity, 0);
+        let assetShares = this.filterAssets(investment.issued_assets).reduce((acc, asset) => acc + asset.quantity, 0);
         return acc + assetShares}, 0)
       .toLocaleString();
 

@@ -27,18 +27,11 @@ class Investment extends Component {
 
   render() {
 
-    let shares = this.props.investmentInfo.issued_assets
-        .filter(asset => this.props.convertDateToMS(asset.investment_date) < this.props.convertDateToMS(this.props.selectedDate))
-        .reduce((acc, asset) => acc + asset.quantity, 0).toLocaleString();
+    let shares = this.props.filterAssets(this.props.investmentInfo.issued_assets).reduce((acc, asset) => acc + asset.quantity, 0).toLocaleString();
 
-    let cost = this.props.investmentInfo.issued_assets
-        .filter(asset => this.props.convertDateToMS(asset.investment_date) < this.props.convertDateToMS(this.props.selectedDate))
-        .reduce((acc, asset) => acc + asset.cost.$, 0).toLocaleString();
+    let cost = this.props.filterAssets(this.props.investmentInfo.issued_assets).reduce((acc, asset) => acc + asset.cost.$, 0).toLocaleString();
     
-    let assets =
-        this.props.investmentInfo.issued_assets
-        .filter(asset => this.props.convertDateToMS(asset.investment_date) < this.props.convertDateToMS(this.props.selectedDate))
-        .map(asset => <Asset assetInfo={asset} key={asset.id} />)
+    let assets = this.props.filterAssets(this.props.investmentInfo.issued_assets).map(asset => <Asset assetInfo={asset} key={asset.id} />)
 
     let arrow;
         this.state.assetsShown === true ?
